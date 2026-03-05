@@ -1,0 +1,542 @@
+
+html{
+  /* Use the gradient on html to avoid “seams” when content is short */
+  min-height:100%;
+  background: radial-gradient(circle at bottom, #0b0f2a 0%, #000000 70%);
+}
+
+body{
+  /* Body stays transparent so html gradient is always visible */
+  min-height:100vh;
+  margin:0;
+  position:relative;
+  overflow-x:hidden;
+  background: transparent; /* important: do NOT put gradient here */
+}
+
+/* Stars overlay (ONLY stars, gradient stays on html!) */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+
+  /* Star dots pattern */
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.85), transparent),
+    radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,.75), transparent),
+    radial-gradient(2px 2px at 50% 50%, rgba(255,255,255,.70), transparent),
+    radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,.70), transparent),
+    radial-gradient(2px 2px at 90% 20%, rgba(255,255,255,.75), transparent);
+
+  background-size:300px 300px;
+  background-repeat:repeat;
+
+  opacity:0.55;
+  pointer-events:none;
+
+  /* Behind content but above html background */
+  z-index:0;
+
+  /* Slow movement for “space” effect */
+  animation: moveStars 60s linear infinite;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+@keyframes moveStars{
+  from{ transform: translate3d(0,0,0); }
+  to  { transform: translate3d(0,-1000px,0); }
+}
+
+/* Keep all main content above the stars layer */
+header, main, footer, .container{
+  position:relative;
+  z-index:1;
+}
+
+/* Optional: wider container (only if you want more horizontal space) */
+.container--wide{
+  max-width: 1400px;
+}
+
+/* =========================
+   Page header
+   ========================= */
+.pagehead{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  padding:18px 0 10px;
+}
+
+.pagehead__title{
+  margin:0 0 6px;
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:-0.2px;
+  text-shadow:0 0 16px rgba(0,200,255,0.12);
+}
+
+.pagehead__subtitle{
+  margin:0;
+  color:var(--muted);
+  max-width:72ch;
+  line-height:1.5;
+}
+
+.small{ font-size:13px; }
+
+/* =========================
+   Portfolio layout blocks
+   ========================= */
+.section{
+  margin-top: 22px;
+}
+
+.section__head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  margin: 10px 0 14px;
+}
+
+.section__title{
+  margin:0;
+  font-size:18px;
+  font-weight:900;
+}
+
+.section__desc{
+  margin:0;
+  color:var(--muted);
+  max-width: 80ch;
+}
+
+/* Year wrapper (if you still use it in some layout parts) */
+.year{
+  border:1px solid rgba(0,200,255,0.18);
+  background: rgba(255,255,255,0.04);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: 0 0 18px rgba(0,200,255,0.10);
+  padding: 16px;
+  margin: 16px 0;
+  overflow:hidden;
+}
+
+.year__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  margin-bottom: 12px;
+}
+
+.year__title{
+  margin:0;
+  font-size:16px;
+  font-weight:900;
+}
+
+.muted{
+  color: var(--muted);
+}
+
+/* Period grid inside year */
+.periods{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* Period card */
+.period{
+  border:1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  padding: 14px;
+  transition: .25s;
+}
+
+.period:hover{
+  border-color: rgba(0,200,255,0.45);
+  box-shadow: 0 0 16px rgba(0,200,255,0.15);
+  transform: translateY(-1px);
+}
+
+.period__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.period__title{
+  margin:0;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+/* Category list inside period */
+.cats{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* Category card (old layout) */
+.cat{
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.08);
+  padding: 12px;
+}
+
+.cat__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.cat__title{
+  margin:0;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+/* Badge style */
+.badge{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,200,255,0.25);
+  background: rgba(0,200,255,0.10);
+  color: var(--text);
+}
+
+/* Files list */
+.filelist{
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+/* File item (clickable link) */
+.file{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+
+  text-decoration:none;
+  color: var(--text);
+  transition: .25s;
+}
+
+.file:hover{
+  border-color: rgba(0,200,255,0.45);
+  box-shadow: 0 0 14px rgba(0,200,255,0.16);
+}
+
+.file__left{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width: 0;
+}
+
+.file__name{
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file__meta{
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.file__right{
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Empty state placeholder */
+.empty{
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px dashed rgba(0,200,255,0.28);
+  background: rgba(0,200,255,0.06);
+  color: var(--muted);
+}
+
+/* Accordion (details/summary) */
+.acc{
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 0 22px rgba(0,200,255,0.08);
+
+  /* Important: allow dropdowns to overflow outside */
+  overflow:visible;
+
+  margin-bottom:16px;
+}
+
+.acc__summary{
+  list-style:none;
+  cursor:pointer;
+  padding:16px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  user-select:none;
+  background: rgba(255,255,255,0.02);
+}
+
+/* Hide default marker in Chrome */
+.acc__summary::-webkit-details-marker{ display:none; }
+
+.acc__summary--period{
+  padding:14px 16px;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+
+.acc__left{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  width:100%;
+  gap:14px;
+}
+
+.acc__title{
+  font-weight:900;
+  font-size:16px;
+}
+
+.acc__meta{
+  color: var(--muted);
+  font-size:13px;
+  white-space:nowrap;
+}
+
+/* Chevron indicator */
+.acc__chev{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  border:1px solid rgba(0,200,255,0.20);
+  background: rgba(255,255,255,0.04);
+  transition:.25s;
+  flex:0 0 auto;
+}
+
+/* Rotate chevron on open */
+.acc[open] > .acc__summary .acc__chev{
+  transform: rotate(180deg);
+  border-color: rgba(0,200,255,0.45);
+  box-shadow: 0 0 14px rgba(0,200,255,0.18);
+}
+
+.acc__content{
+  padding:16px 18px 18px;
+}
+
+/* Empty state (duplicate style but fine if you want stronger version) */
+.empty{
+  padding:16px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.05);
+  color: var(--muted);
+}
+
+/* Category card (new layout inside accordion) */
+.catcard{
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;
+  background: rgba(255,255,255,0.03);
+  padding:14px;
+  margin-bottom:14px;
+}
+
+.catcard__head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.catcard__title{
+  font-size:16px;
+  font-weight:900;
+}
+
+/* File row = download link + admin dots button */
+.filerow{
+  display:flex;
+  align-items:stretch;
+  gap:10px;
+}
+
+.filerow .file{
+  flex:1 1 auto;
+}
+
+/* Admin “three dots” wrapper */
+.dots{
+  position:relative;
+  flex:0 0 auto;
+}
+
+/* Three dots button */
+.dots__btn{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  border:1px solid rgba(0,200,255,0.20);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.dots__btn:hover{
+  border-color: rgba(0,200,255,0.45);
+  box-shadow: 0 0 12px rgba(0,200,255,0.12);
+}
+
+/* Dropdown menu (hidden by default, shown via JS) */
+.dots__menu{
+  display:none;
+  position:absolute;
+
+  /* Menu opens to the right side of the dots button */
+  left: calc(100% + 10px);
+  top: 48; /* NOTE: you probably want: top: 48px; */
+
+  min-width:220px;
+  z-index:50;
+
+  background: rgba(10,15,40,0.95);
+  border:1px solid rgba(0,200,255,0.20);
+  border-radius:14px;
+  padding:10px;
+  backdrop-filter: blur(12px);
+}
+
+/* Menu item button */
+.dots__item{
+  width:100%;
+  text-align:left;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.dots__item:hover{
+  border-color: rgba(0,200,255,0.40);
+  box-shadow: 0 0 12px rgba(0,200,255,0.10);
+}
+
+/* Danger action (delete) */
+.dots__item--danger{
+  border-color: rgba(255,80,80,0.30);
+}
+
+.dots__item--danger:hover{
+  border-color: rgba(255,80,80,0.55);
+  box-shadow: 0 0 12px rgba(255,80,80,0.12);
+}
+
+/* Input inside menu (block username) */
+.dots__input{
+  width:100%;
+  height:40px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  padding:0 10px;
+  margin:8px 0 8px;
+  outline:none;
+}
+
+/* Separator line */
+.dots__divider{
+  height:1px;
+  background: rgba(255,255,255,0.10);
+  margin:10px 0;
+}
+
+/* Small label text (Blocked:) */
+.dots__label{
+  font-size:12px;
+  color: var(--muted);
+  margin-bottom:6px;
+}
+
+/* Row with blocked username + unhide button */
+.dots__row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:6px 2px;
+}
+
+/* Username text inside dropdown */
+.dots__user{
+  font-size:13px;
+  color: var(--text);
+  opacity:.9;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width:130px;
+}
+
+/* Small “Unhide” button */
+.dots__small{
+  padding:7px 10px;
+  border-radius:10px;
+  border:1px solid rgba(0,200,255,0.20);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.dots__small:hover{
+  border-color: rgba(0,200,255,0.45);
+  box-shadow: 0 0 12px rgba(0,200,255,0.12);
+}
+
+/* Alternative dropdown class (if you use a different JS toggle) */
+.dots-dropdown{ display:none; }
+.dots-dropdown.is-open{ display:block; }
