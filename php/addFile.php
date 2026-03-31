@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors[] = 'Year must be between 1 and 4.';
   }
 
-  if ($period < 1 || $period > 3) {
+  if ($period < 1 || $period > 4) {
     $errors[] = 'Period must be between 1 and 3.';
   }
 
@@ -413,7 +413,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="field">
             <label class="label" for="period">Period</label>
             <select class="select" id="period" name="period" required>
-              <?php for ($p=1; $p<=3; $p++): ?>
+              <?php for ($p=1; $p<=4; $p++): ?>
                 <option value="<?= $p ?>" <?= ((string)$p === (string)$old['period']) ? 'selected' : '' ?>>
                   Period <?= $p ?>
                 </option>
