@@ -426,7 +426,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <label class="label" for="category">Category</label>
           <select class="select" id="category" name="category" required>
             <?php
-              $cats = ['General','Web Development','Project Innovate','Software Quality','Projects','Reflections','Reports'];
+              $cats = ['WebDev', 'Professional Skills', 'Database', 'BattleBot', 'OOP', 'General', 'Reflections'];
               foreach ($cats as $c):
             ?>
               <option value="<?= e($c) ?>" <?= ($c === $old['category']) ? 'selected' : '' ?>>
